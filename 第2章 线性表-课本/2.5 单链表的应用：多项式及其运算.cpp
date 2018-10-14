@@ -72,7 +72,60 @@ Polynomial::Polynomial(Polynomial& R)
 	while(sourceptr != NULL)
 	{
 		targetptr -> InsertAfter(sourceptr -> coef, sourceptr -> exp);
+		// 上面的一行：
+		// targetptr = new Term(sourceptr -> coef, sourceptr -> exp);
 		sourceptr = sourceptr -> link;
 		targetptr = targetptr -> link;
 	}
 };
+
+//计算最大阶数，当多项式按升序排列时，最后一项中是指数最大者
+int Polynomial::maxOrder()
+{
+	Term* current = first;
+	while(current -> link != NULL)
+	{
+		current = current -> link;
+	}
+	//空表情形，current停留在first，否则current停留在表尾节点
+	return current -> exp;
+};
+
+//Polynomial类的友元函数，从输入流in输入各项，用尾插法建立一个多项式
+istream& operator>>(istream& in, Polynomial& x)
+{
+	Term *rear = x.getHead();
+	int c, e;
+	while(1)
+	{
+		cout << "input a term(coef, exp)" << endl;
+		in >> c >> e;
+		if(e < 0)
+		{
+			break;
+		}
+		rear = rear -> InsertAfter(c,e);
+	}
+	return in;
+};
+
+//Polynomial类的友元函数：输出附加头结点的多项式链表x
+ostream& operator<<(ostream& out, Polynomial& x)
+{
+	Term* current = x.getHead() -> link;
+	cout << "The polynomial is:" << endl;
+	bool h = true;
+	while(current != NULL)
+	{
+		if(h == false && current -> coed > 0.0)
+		{
+			out << "+";
+		}
+		h = false;
+		out << *current;
+		current = current -> link;
+	}
+	out << endl;
+	return out;
+};
+#endif
