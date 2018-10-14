@@ -295,3 +295,64 @@ LinkNode<T>* List<T>::Locate(int i)
 	}
 	return p;
 };
+
+//取出表中dii空格元素的值,保存在x中
+template<class T>
+bool List<T>::getData(int i, T& x) const
+{
+	//需要定位的算法首先确定是否在界内
+	if(i < 0)
+	{
+		return NULL;
+	}
+	LinkNode<T>* current = Locate(i);
+	if(current == NULL)
+	{
+		return false;
+	}
+	else
+	{
+		x = current -> data; //将数据记录在x中
+		return true;
+	}
+};
+
+//给链表第i个元素赋值
+template<class T>
+void List<T>::setData(int i, T& x)
+{
+	//定位先判断
+	if(i < 0)
+	{
+		return false;
+	}
+	LinkNode<T>* current = Locate(i);
+	if(current == NULL)
+	{
+		return false;
+	}
+	else
+	{
+		current -> data = x;
+	}
+};
+
+//将新元素x插入到第i个节点之后。
+template<class T>
+bool List<T>::Insert(int i, T& x)
+{
+	LinkNode<T>* current = Locate(i);
+	if(current == NULL)
+	{
+		return false;
+	}
+	LinkNode<T>* newNode = new LinkNode<T>(x);
+	if(newNode == NULL)
+	{
+		cerr << "存储分配错误" << endl;
+		exit(1);
+	}
+	newNode -> link = current -> link;
+	current -> link = newNode;
+	return true;
+};
