@@ -98,3 +98,34 @@ void deleteValue(SeqList& L, DataType x)
 	}
 	L.n = k;
 };
+
+//2.2.16 删除一个顺序表中在s和t之间的值，把这些值用之后的值补掉
+int deleteNo_sto_t(SeqList& L, DataType s, DataType t)
+{
+	if(L.n == 0)
+	{
+		cerr << "空表不能删除" << endl;
+		return 0;
+	}
+	if(s > T)
+	{
+		DataType tenp = s;
+		s = t;
+		t = temp;
+	}
+	int i, k = 0;
+	for(int i = 0; i < L.n; i++)
+	{
+		if(L.data[i] < s || L.data[i] > t) //保留区间之外的值
+		{
+			if(k != i)
+			{
+				L.data[k] = L.data[i];
+				k++;
+			}
+		}
+	}
+	L.n = k;
+	return 1;
+};
+
