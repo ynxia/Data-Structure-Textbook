@@ -126,3 +126,116 @@ int DblList<T>::Length() const{
 	}
 	return count;
 };
+
+//双向链表的搜索、插入和删除算法
+
+//搜索算法的实现，返回节点的地址
+template<class T>
+DblNode<T> *DblList<T>::Search(const T& x)
+{
+	DblNode<T>* current = first -> rLink;
+	while(current != first && current -> data != x)
+	{
+		current = current -> rLink;
+	}
+	if(current != first)
+	{
+		return current;
+	}
+	else
+	{
+		return NULL;
+	}
+};
+
+//定位运算的实现
+template<class T>
+DblNode<T>* DblList<T>::Locate(int i, int d){
+	if(first -> rLink == first || i = 0)
+	{
+		return first;
+	}
+	DblNode<T>* current;
+	if(d == 0)
+	{
+		current = first -> lLink;
+	}
+	else
+	{
+		current = first -> rLink;
+	}
+	for(j = 1; j < i; j++)
+	{
+		if(current == first) break; //链太短退出搜索
+		else if(d == 0)
+		{
+			current = current -> lLink；
+		}
+		else{
+			current = current => rLink;
+		}
+	}
+	if(current != first)
+	{
+		return current;
+	}
+	else
+	{
+		return NULL;
+	}
+};
+
+//插入算法的实现
+template<class T>
+bool DblList<T>::Insert(int i, const T& x, int d)
+{
+	//建立一个包含有值x的新节点，并将其按照d的方向插入到双向循环链表中
+	DblNode<T>* current(i, d);
+	if(current == NULL)  //i不合理，插入失败
+	{
+		return false;
+	}
+	DblNode *newNode = new DblNode<T>(x);
+	if(newNode == NULL)
+	{
+		cerr << "存储分配错误" << endl;
+		exit(1);
+	}
+	//d=0与d=1的情况分类讨论
+	if(d == 0) // 前驱方向插入
+	{
+		//先向左
+		newNode -> lLink = current -> lLink;
+		current -> lLink = newNode;
+		//再向右
+		newNode -> lLink -> rLink = newNode;
+		newNode -> rLink = current;
+	}
+	else
+	{
+		//先向右
+		newNode -> rLink = current -> rLink;
+		current -> rLink = newNode;
+		//再向左
+		newNode -> rLink -> lLink = newNode;
+		newNode -> lLink = current;
+	}
+	return true;
+};
+
+//删除运算的实现
+template<class T>
+bool DblList<T>::Remove(int i, const T& x, int d)
+{
+	DblNode<T> *current = Locate(i, d);
+	if(current == NULL)
+	{
+		cerr << "存储分配错误" << endl;
+		exit(1);
+	}
+	//记得要保存数据
+	current -> rLink -> lLink = current -> lLink;
+	current -> lLink -> rLink = current -> rLink;
+	x = current -> data;
+	return true;
+};
