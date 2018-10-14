@@ -66,3 +66,63 @@ void main()
 	}
 	Josephus(clist, n, m);
 };
+
+//双向链表
+
+//带附加头结点的双向循环链表的类定义
+template<class T>
+struct DblNode{
+	T data;
+	DblNode<T> *lLink, *rLink;
+	DblNode(DblNode<T> *left = NULL, DblNode<T> *right = NULL):data(value), lLink(left), rLink(right){} //构造函数
+}；
+
+template<class T>
+class DblList:public LinearList<T>{
+public:
+	DblList(T uniqueVal); //建立附加头结点
+	~DblList();
+	int Length() const;
+	bool IsEmpty()
+	{
+		return first -> rlink == first; //空的双向循环链表头结点指向自己则为空
+	}
+	DblNode<T> *getHead() const{ //获取头结点地址
+		return first;
+	}
+	void setHead(DblNode<T> *ptr)
+	{
+		first = ptr;
+	}
+	DblNode<T> *Search(const T& x);
+	DblNode<T> Locate(int i, int d); //在链表中定位序号为i的节点，其中d=0表示前驱方向，d!=0表示后继方向
+	bool Insert(int i, const T& x, int d);
+	bool Remove(int i, T& x, int d);
+private:
+	DblNode<T> *first;
+};
+
+template<class T>
+DblList<T>::DblList(T uniqueVal){
+	//构造函数，建立双向链表的附加头结点，它包含了一个用于某些特定情况的值
+	first = new DblNode<T>(uniqueVal);
+	if(first == NULL)
+	{
+		cerr << "存储分配错误" << endl;
+		exit(1);
+	}
+	first -> lLink = first -> rLink = first; //双向链表头结点均指向自己
+};
+
+template<class T>
+int DblList<T>::Length() const{
+	//计算双向链表的长度
+	DblNode<T> *current = first -> rLink;
+	int count = 0;
+	while(current != first)
+	{
+		current = current -> rLink;
+		count++;
+	}
+	return count;
+};
