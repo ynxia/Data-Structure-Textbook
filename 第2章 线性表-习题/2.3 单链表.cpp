@@ -178,3 +178,31 @@ int Max(LinkNode *L)
 		return temp;
 	}
 };
+
+//(2)
+int Num(LinkNode* L)
+{
+	if(L == NULL)
+	{
+		return 0;
+	}
+	return 1 + Num(L -> link);
+};
+
+//(3)
+float Avg(LinkNode* L, int& n)
+{
+	if(L -> link == NULL)
+	{
+		n = 1;
+		return (float)(L -> data);
+	}
+	else
+	{
+		float Sum = Avg(L -> link, n) * n;
+		n++;
+		return (L -> data + Sum) / n;
+	}
+};
+
+//2.3.20 设
