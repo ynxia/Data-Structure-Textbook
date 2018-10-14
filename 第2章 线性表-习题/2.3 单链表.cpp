@@ -66,4 +66,58 @@ int Remove(LinkNode* L, int k)
 	return 1;
 };
 
+//2.3.14 在带头结点的单链表中寻找第i个结点并返回相应指针
+LinkNode* Locate(LinkList& L, int i)
+{
+	if(i < 0)
+	{
+		cerr << "寻找位置错误" << endl;
+		return 0;
+	}
+	LinkNode* p = L;
+	int k = 0;
+	while(p != NULL && k < i)
+	{
+		p = p -> link;
+		k++;
+	}
+	return p;
+};
+
+//2.3.15 在带头结点的单链表中确定值最大的节点，并返回相应指针
+LinkNode* Max(LinkList& L)
+{
+	if(L -> link == NULL)
+	{
+		cerr << "该表是空表" << endl;
+		return NULL;
+	}
+	LinkNode* pmax = L -> link; //pmax表示单链表的首节点
+	LinkNode* p = L -> link -> link; //p表示单链表的第二个节点
+	while(p != NULL)
+	{
+		if(p -> data > pmax -> data)
+		{
+			pmax = p;
+		}
+		p = p -> link;
+	}
+	return pmax;
+};
+
+//2.3.16 统计带头结点的单链表中具有给定值x的所有元素数
+int Count(LinkList& L, DataType x)
+{
+	int n = 0;
+	LinkNode* p = L -> link;
+	while(p != NULL)
+	{
+		if(p -> data == x)
+		{
+			count++;
+		}
+		p = p -> link;
+	}
+	return count;
+};
 
