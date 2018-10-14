@@ -58,4 +58,9 @@ public:
 
 //没有头节点的单链表的插入和删除
 
+//单链表的插入算法
+bool List::Insert(int i, int& x)
+{
+	
+}
 
