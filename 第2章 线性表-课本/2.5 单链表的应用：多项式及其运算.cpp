@@ -117,7 +117,7 @@ ostream& operator<<(ostream& out, Polynomial& x)
 	bool h = true;
 	while(current != NULL)
 	{
-		if(h == false && current -> coed > 0.0)
+		if(h == false && current -> coef > 0.0)
 		{
 			out << "+";
 		}
@@ -148,8 +148,77 @@ Polynomial operator+(Polynomial& A, Polynomial& B)
 			temp = pa.coef +pb.coef;
 			if(fabs(temp) > 0.001) //如果相加后系数不为0
 			{
-				
+				pc = pc -> InsertAfter(temp, pa -> exp);
 			}
+			pa = pa -> link;
+			pb = pb -> link;
+		}
+		else if(pa -> exp < pb -> exp)
+		{
+			pc = pc -> InsertAfter(pa -> coef, pa -> exp);
+			pa = pa -> link;
+		}
+		else
+		{
+			pc = pc -> InsertAfter(pb -> coef, pb -> exp);
+			pb = pb -> link;
 		}
 	}
-}
+	//多余的直接添加在尾部
+	if(pa != NULL)
+	{
+		p = pa;
+	}
+	else
+	{
+		p = pb;
+	}
+	while(p != NULL)
+	{
+		pc = pc -> InsertAfter(p -> coef, p -> exp);
+		p = p -> link;
+	}
+	return C;
+};
+
+//多项式乘法：两个一元多项式相乘
+Polynomial operator*(Polynomial& A, Polynomial& B)
+{
+	Term *pa, *pn, *pc;
+	int AL, BL, i, k, maxExp;
+	Polynomial C; //定义结果多项式
+	pc = C.getHead();
+	AL = A.maxOrder();
+	BL = B.maxOrder();
+	if(AL != -1 || BL != -1)
+	{
+		maxExp = AL + BL;
+		float *result = new float[maxExp + 1];
+		for(int i = 0; i <= maxExp; i++)
+		{
+			result[i] = 0.0;
+		}
+		pa = A.getHead() -> link; //多项式A的检测指针
+		while(pa != NULL)
+		{
+			pb = B.getHead() -> link;
+			while(pb != NULL)
+			{
+				k = pa -> exp + pb -> exp;
+				result[k] = result[k] + pa -> coef * pb -> coef;
+				pb = pb -> link;
+			}
+			pa = pa -> link;
+		}
+		for(i = 0; i < maxExp; i++)
+		{
+			if(fabs(result[i]) > 0.001)
+			{
+				pc = pc -> InsertAfter(result[i]. i);
+			}
+		}
+		delete []result;
+	}
+	pc -> link = NULL;
+	return C;
+};
