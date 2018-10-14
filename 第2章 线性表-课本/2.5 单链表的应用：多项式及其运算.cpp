@@ -63,3 +63,16 @@ ostream& operator<<(ostream& out, const Term& x)
 	return out;
 };
 
+Polynomial::Polynomial(Polynomial& R)
+{
+	//复制构造函数，用已有多项式R初始化当前多项式对象R
+	first = new Term(0, -1);
+	Term *targetptr = first;
+	Term *sourceptr = R.getHead() -> link;
+	while(sourceptr != NULL)
+	{
+		targetptr -> InsertAfter(sourceptr -> coef, sourceptr -> exp);
+		sourceptr = sourceptr -> link;
+		targetptr = targetptr -> link;
+	}
+};
