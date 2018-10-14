@@ -129,3 +129,27 @@ ostream& operator<<(ostream& out, Polynomial& x)
 	return out;
 };
 #endif
+
+//多项式加法
+
+Polynomial operator+(Polynomial& A, Polynomial& B)
+{
+	Term *pa, *pb, *pc, *p; //pa、pb定位于A与B的第一个节点，是两链的检测指针
+	float temp;
+	Polynomial C;
+	pc = C.first; //pc为结果多项式在创建过程中的尾指针
+	pa = A.getHead() -> link;
+	pb = B.getHead() -> link;
+	while(pa != NULL && pb != NULL)
+	{
+		//根据e1和e2的大小分为三种情况
+		if(pa -> exp == pb -> exp)
+		{
+			temp = pa.coef +pb.coef;
+			if(fabs(temp) > 0.001) //如果相加后系数不为0
+			{
+				
+			}
+		}
+	}
+}

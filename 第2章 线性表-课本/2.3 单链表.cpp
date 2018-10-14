@@ -296,7 +296,7 @@ LinkNode<T>* List<T>::Locate(int i)
 	return p;
 };
 
-//取出表中dii空格元素的值,保存在x中
+//取出表中第i个元素的值,保存在x中
 template<class T>
 bool List<T>::getData(int i, T& x) const
 {
