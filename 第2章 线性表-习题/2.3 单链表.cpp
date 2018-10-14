@@ -205,4 +205,48 @@ float Avg(LinkNode* L, int& n)
 	}
 };
 
-//2.3.20 设
+//2.3.20 设ha和hb分别是两个带头结点的非递减有序单链表的表头指针，设计一个算法，
+//将这两个有序链表合并成一个非递增有序单链表。
+//要求结果链仍然使用原来两个链表的存储空间，不另外占用其他存储空间
+void ReverseMerge(LinkList& ha, LinkList& hb)
+{
+	LinkNode *pa, *pb, *last, *q;
+	pa = ha -> link;
+	pb = hb -> link;
+	ha -> link = NULL; //将ha作为结果链
+	delete hb;
+	while(pa != NULL pb != NULL)
+	{
+		if(pa -> data <= pb -> data)
+		{
+			q = pa;
+			pa = pa -> link;
+		}
+		else
+		{
+			q = pb;
+			pb = pb -> link;
+		}
+		q -> link = ha -> link;
+		ha -> link = q;
+	}
+	if(pb != NULL)
+	{
+		pa = pb; //pb链更长的话用pa继续进行节点传递
+	}
+	while(pa != NULL)
+	{
+		q = pa;
+		pa = pa -> link;
+		q -> link = ha -> link;
+		ha -> link = q;
+	}
+};
+
+// 2.3.21 从左到右及从右到左遍历一个单链表是可能的，其方法是从左到右的遍历的过程中将链接方向逆转。
+//(1)设计一个算法，从任意给定的位置(pr,p)开始，将指针p右移k个结点。如果p移出链表，则将p置为NULL，并让pr停留在链表最右边的节点上
+//(2)设计一个算法，从任意给定的位置(pr,p)开始，将指针p左移k个结点。如果p移出链表，则将p置为NULL，并让pr停留在链表最左边的节点上
+
+//(1)
+void siftToRight(LinkList& L, LinkNode*)
+
