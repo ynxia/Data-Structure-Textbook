@@ -121,3 +121,60 @@ int Count(LinkList& L, DataType x)
 	return count;
 };
 
+//2.3.17 根据一个一位数组A[n]建立一个带头结点的单链表，使单链表中各元素的次序与A[n]中各元素的次序相同，要求时间复杂度为O(n)
+void CreateList(LinkList& L, DataType A[], int n)
+{
+	LinkNode* rear; //建立单链表头结点
+	L = rear = new LinkNode;
+	for(int i = 0; i < n; i++)
+	{
+		rear -> link = new LinkNode;
+		rear = rear -> link;
+		rear -> data = A[i];
+	}
+	rear -> link = NULL;
+};
+
+//2.3.18 在 非递减有序 的带头结点的单链表中删除值相同的多余节点
+void Tidyup(LinkList& L)
+{
+	LinkNode* p = L -> link; //p指向单链表首节点
+	LinkNode* del;
+	while(p != NULL && p -> link != NULL)
+	{
+		if(p -> data == p -> link -> data)
+		{
+			del = p -> link;
+			p -> link = del -> link;
+			delete del;
+		}
+		else
+		{
+			p = p -> link;
+		}
+	}
+};
+
+//2.3.19 已知L为不带头节点的单链表的表头指针，链表存储整型数据，写出下列运算的递归算法
+//(1)求链表中的最大整数
+//(2)求链表的结点个数
+//(3)求链表中所有元素的平均值
+
+//(1)
+int Max(LinkNode *L)
+{
+	//该单链表不带附加的头节点
+	if(L -> link == NULL)
+	{
+		return L -> data;
+	}
+	int temp = Max(L -> link); //递归运算
+	if(L -> data > temp)
+	{
+		return L -> data;
+	}
+	else
+	{
+		return temp;
+	}
+};
