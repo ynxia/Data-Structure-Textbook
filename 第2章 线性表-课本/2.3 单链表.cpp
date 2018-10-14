@@ -244,3 +244,17 @@ void List<T>::makeEmpty()
 		delete q;
 	}
 };
+
+// 计算带附加头结点的单链表的长度
+template<class T>
+int List<T>::Length)() const
+{
+	LinkNode<T> *p = first -> link;
+	int count = 0;
+	while(p != NULL)
+	{
+		p = p -> link;
+		count++;
+	}
+	return count;
+};
