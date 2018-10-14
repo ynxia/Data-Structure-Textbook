@@ -215,3 +215,32 @@ protected:
 	LinkNode<T> *first;
 };
 
+//复制构造函数
+template<class T>
+List<T>&::List(List<T>& L)
+{
+	T value;
+	LinkNode<T>* sourceptr = L.getHead(); //源链表的头结点
+	LinkNode<T>* targetptr = new LinkNode<T>; //目标链表的头结点
+	while(sourceptr -> link != NULL) 下一个节点非空时
+	{
+		value = sourceptr -> link -> data; //记录数据
+		targetptr -> link = new LinkNode<T>(value); //目标链表添加一个带有value值的新节点
+		targetptr = targetptr -> link;
+		sourceptr = sourceptr -> link;
+	}
+	targetptr -> link = NULL; //给目标链表的尾节点增加NULL
+};
+
+// 将链表置为空表
+template<class T>
+void List<T>::makeEmpty()
+{
+	LinkNode* q;
+	while(first -> link != NULL)
+	{
+		q = first -> link;
+		first -> link = q -> link;
+		delete q;
+	}
+};
