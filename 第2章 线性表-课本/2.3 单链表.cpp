@@ -356,3 +356,19 @@ bool List<T>::Insert(int i, T& x)
 	current -> link = newNode;
 	return true;
 };
+
+//将链表中的第i个元素删去，通过引用型参数x返回该元素的值
+template<class T>
+bool List<T>::Remove(int i, T& x)
+{
+	LinkNode<T>* current = Locate(i - 1);
+	if(current == NULL ||current -> link == NULL)
+	{
+		return false;
+	}
+	LinkNode<T> *del = current -> link;
+	current -> link = del -> link;
+	x = del -> data;
+	delete del;
+	return true;
+};
