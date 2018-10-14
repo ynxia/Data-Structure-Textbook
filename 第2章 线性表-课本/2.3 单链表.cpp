@@ -372,3 +372,35 @@ bool List<T>::Remove(int i, T& x)
 	delete del;
 	return true;
 };
+
+//单链表的输出函数：将单链表中所有数据按逻辑顺序输出到屏幕上
+template<class T>
+void List<T>::output()
+{
+	LinkNode<T>* current = first -> link;
+	while(current != NULL)
+	{
+		cout << current -> data <<endl;
+		current = current -> link;
+	}
+};
+
+//重载函数：赋值操作，形如A=B，其中A是调用此操作的List对象，B是与参数表中的引用型参数L结合的实参
+template<class T>
+List<T>& List<T>::operator=(List<T>& L)
+{
+	T value;
+	LinkNode<T>* sourceptr = L.getHead();
+	LinkNode<T>* targetptr = first = new LinkNode<T>;
+	while(sourceptr -> link != NULL)
+	{
+		value = sourceptr -> link -> data;
+		targetptr -> link = new LinkNode<T>(value); //*
+		sourceptr = sourceptr -> link;
+		targetptr = targetptr -> link;
+	}
+	targetptr -> link = NULL;
+	return *this;
+};
+
+//关于this指针的补充说明
