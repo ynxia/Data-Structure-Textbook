@@ -258,3 +258,40 @@ int List<T>::Length)() const
 	}
 	return count;
 };
+
+//在表中搜索含数据x的节点，搜索成功时返回该节点地址，否则返回NULL
+template<class T>
+LinkNode<T>* List<T>::Search(T x)
+{
+	LinkNode<T>* current = first -> link;
+	while(current != NULL)
+	{
+		if(current -> data == x)
+		{
+			break;
+		}
+		else
+		{
+			current = current -> link;
+		}
+	}
+	return current;
+};
+
+//定位函数，返回表中第i个元素的地址
+template<class T>
+LinkNode<T>* List<T>::Locate(int i)
+{
+	if(i < 0)
+	{
+		return NULL;
+	}
+	LinkNode<T>* p = first;
+	int k = 0;
+	while(p != NULL && k < i) //循环后自然找到第i个节点
+	{
+		p = p -> link;
+		k++;
+	}
+	return p;
+};
