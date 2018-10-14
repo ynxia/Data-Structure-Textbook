@@ -403,4 +403,22 @@ List<T>& List<T>::operator=(List<T>& L)
 	return *this;
 };
 
-//关于this指针的补充说明
+//关于input()函数的两种实现
+//前插法建立单链表
+template<class T>
+void List<T>::inputFront(T endTag)
+{
+	//endTag是约定的输入序列结束的标志，如果输入序列是正整数，endTag可以是0或者负数
+	//如果输入序列是字符，endTag可以是字符集中不会出现的字符，如“\0”
+	//前插法插入的节点永远是头结点之后的第一个位置
+	//每次创建新节点都做一次存储分配是否正确的判断
+	LinkNode<T>* newNode;
+	T val;
+	makeEmpty();
+	cin >> val;
+	while(val != endTag)
+	{
+		newNode = new LinkNode<T>(val);
+		
+	}
+}
