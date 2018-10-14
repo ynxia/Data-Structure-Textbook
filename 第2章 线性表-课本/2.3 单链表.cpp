@@ -419,6 +419,37 @@ void List<T>::inputFront(T endTag)
 	while(val != endTag)
 	{
 		newNode = new LinkNode<T>(val);
-		
+		if(newNode == NULL)
+		{
+			cerr << "存储分配错误" << endl;
+			exit(1);
+		}
+		newNode -> link = first -> link;
+		first -> link = newNode; //插入到表前端
+		cin >> val;
 	}
-}
+};
+
+//后插法建立单链表
+template<class T>
+void List<T>::inputRear(T endTag)
+{
+	LinkNode<T> *newNode, *last;
+	T val;
+	makeEmpty();
+	cin >> val;
+	last = first;
+	while(val != endTag)
+	{
+		newNode = new LinkNode<T>(val);
+		if(newNode == NULL)
+		{
+			cerr << "存储分配错误" << endl;
+			exit(1);
+		}
+		last -> link = newNode;
+		last = newNode;
+		cin >> val;
+	}
+	last -> link = NULL;
+};
