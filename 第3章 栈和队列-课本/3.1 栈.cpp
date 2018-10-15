@@ -171,4 +171,72 @@ LinkedStack<T>::makeEmpty()
 	}
 };
 
-//
+//template<typename T>
+void LinkedStack<T>::Push(const T& x)
+{
+	//将元素x插入到链式栈的栈顶
+	top = new LinkNode<T>(x, top); //创建新的含x的结点
+	assert(top != NULL); //创建新结点失败退出
+};
+
+template<typename T>
+bool LinkedStack<T>::Pop(T& x)
+{
+	//删除栈顶结点，返回被删除结点的值
+	if(IsEmpty() == true)
+	{
+		return false;
+	}
+	//所谓的删除结点，即新创建一个指针指向这个节点的地址
+	//进行保存数据等操作后，将指向该地址的指针删除
+	//也就是：把指针指向的内存空间释放掉
+	LinkNode<T> *p = top;
+	top = top -> link; //移top
+	x = p -> data; //存储栈顶的值
+	delete p; //删除临时指针，此时p成为野指针，应该：
+	p = NULL;
+	return true;
+};
+
+template<typename T>
+bool LinkedStack<T>::getTop(T& x) const
+{
+	//返回栈顶元素
+	if(IsEmpty() == 0)
+	{
+		return false;
+	}
+	x = top -> data;
+	return true;
+};
+
+template<typename T>
+int LinkedStack<T>::getSize() const
+{
+	LinkNode<T> *p = top;
+	int k = 0;
+	while(top != NULL)
+	{
+		top = top -> link;
+		k++;
+	}
+	return k;
+};
+
+//输出栈中元素的重载操作
+template<typename T>
+ostream& operator<<(ostream& os, LinkedStack<T>& s)
+{
+	os << "栈中元素的个数=" << s.getSize() << endl; //输出栈中元素的个数
+	LinkNode<T> *p = S.top;
+	int i = 0;
+	while(p != NULL)
+	{
+		os << ++i << ":" << p -> data << endl;
+		p = p -> link;
+	}
+	return os;
+};
+
+//如果同时使用n个链式栈，其头指针数组可用下列方式定义
+LinkNode<T> *s = new LinkNode<T>[n];
