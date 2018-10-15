@@ -3,11 +3,11 @@
 //单链表的定位运算
 LinkNode* Locate(LinkNode* L, int k)
 {
-	//找到则返回该节点的指针
+	//找到则返回该结点的指针
 	LinkNode* p;
 	int i;
 	i = 1;
-	p = L -> link; //p表示首节点
+	p = L -> link; //p表示首结点
 	while(p != NULL && i < k)
 	{
 		p = p -> link;
@@ -24,7 +24,7 @@ LinkNode* Locate(LinkNode* L, int k)
 int Insert(LinkNode* L, int k, int elem)
 {
 	LinkNode *p, *q;
-	if(k == 1) //用p记录目标节点的前一个元素
+	if(k == 1) //用p记录目标结点的前一个元素
 	{
 		p = L;
 	}
@@ -84,7 +84,7 @@ LinkNode* Locate(LinkList& L, int i)
 	return p;
 };
 
-//2.3.15 在带头结点的单链表中确定值最大的节点，并返回相应指针
+//2.3.15 在带头结点的单链表中确定值最大的结点，并返回相应指针
 LinkNode* Max(LinkList& L)
 {
 	if(L -> link == NULL)
@@ -92,8 +92,8 @@ LinkNode* Max(LinkList& L)
 		cerr << "该表是空表" << endl;
 		return NULL;
 	}
-	LinkNode* pmax = L -> link; //pmax表示单链表的首节点
-	LinkNode* p = L -> link -> link; //p表示单链表的第二个节点
+	LinkNode* pmax = L -> link; //pmax表示单链表的首结点
+	LinkNode* p = L -> link -> link; //p表示单链表的第二个结点
 	while(p != NULL)
 	{
 		if(p -> data > pmax -> data)
@@ -135,10 +135,10 @@ void CreateList(LinkList& L, DataType A[], int n)
 	rear -> link = NULL;
 };
 
-//2.3.18 在 非递减有序 的带头结点的单链表中删除值相同的多余节点
+//2.3.18 在 非递减有序 的带头结点的单链表中删除值相同的多余结点
 void Tidyup(LinkList& L)
 {
-	LinkNode* p = L -> link; //p指向单链表首节点
+	LinkNode* p = L -> link; //p指向单链表首结点
 	LinkNode* del;
 	while(p != NULL && p -> link != NULL)
 	{
@@ -155,7 +155,7 @@ void Tidyup(LinkList& L)
 	}
 };
 
-//2.3.19 已知L为不带头节点的单链表的表头指针，链表存储整型数据，写出下列运算的递归算法
+//2.3.19 已知L为不带头结点的单链表的表头指针，链表存储整型数据，写出下列运算的递归算法
 //(1)求链表中的最大整数
 //(2)求链表的结点个数
 //(3)求链表中所有元素的平均值
@@ -163,7 +163,7 @@ void Tidyup(LinkList& L)
 //(1)
 int Max(LinkNode *L)
 {
-	//该单链表不带附加的头节点
+	//该单链表不带附加的头结点
 	if(L -> link == NULL)
 	{
 		return L -> data;
@@ -232,7 +232,7 @@ void ReverseMerge(LinkList& ha, LinkList& hb)
 	}
 	if(pb != NULL)
 	{
-		pa = pb; //pb链更长的话用pa继续进行节点传递
+		pa = pb; //pb链更长的话用pa继续进行结点传递
 	}
 	while(pa != NULL)
 	{
@@ -244,9 +244,62 @@ void ReverseMerge(LinkList& ha, LinkList& hb)
 };
 
 // 2.3.21 从左到右及从右到左遍历一个单链表是可能的，其方法是从左到右的遍历的过程中将链接方向逆转。
-//(1)设计一个算法，从任意给定的位置(pr,p)开始，将指针p右移k个结点。如果p移出链表，则将p置为NULL，并让pr停留在链表最右边的节点上
-//(2)设计一个算法，从任意给定的位置(pr,p)开始，将指针p左移k个结点。如果p移出链表，则将p置为NULL，并让pr停留在链表最左边的节点上
+//(1)设计一个算法，从任意给定的位置(pr,p)开始，将指针p右移k个结点。如果p移出链表，则将p置为NULL，并让pr停留在链表最右边的结点上
+//(2)设计一个算法，从任意给定的位置(pr,p)开始，将指针p左移k个结点。如果p移出链表，则将p置为NULL，并让pr停留在链表最左边的结点上
 
 //(1)
-void siftToRight(LinkList& L, LinkNode*)
+void siftToRight(LinkList& L, LinkNode* &p, LinkNode* &pr, int k)
+{
+	//这里的p和pr属于指针的引用，
+	//这样p和pr就能互换地址
+	LinkNode* q;
+	int count = 0;
+	while(p != NULL && count < k)
+	{
+		q = p -> link;
+		p -> link = pr;
+		pr = p;
+		p = q;
+		count++;
+	}
+	cout << "右移了" << count << "个结点" << endl;
+};
 
+//(2)
+void siftToLeft(LinkList& L, LinkNode* &p, LinkNode* &pr, int k)
+{
+	LinkNode* q;
+	int count = 0;
+	while(pr != NULL && count < k)
+	{
+		q = pr -> link;
+		pr -> link = p;
+		p = pr;
+		pr = q;
+		count++;
+	}
+	cout << "左移了" << count << "个结点" << endl;
+};
+
+//2.3.22 设有一个表头指针h的单链表，设计一个算法，通过遍历一趟链表，将链表中所有结点的链接方向逆转
+//没有附加头结点
+void Reverse(LinkNode* &h)
+{
+	//算法思想：从首元结点开始，逐个地把链表L的当前结点p
+	//插入新的链表头部
+	if(h == NULL)
+	{
+		return;
+	}
+	LinkNode *p = h -> link, *pr = NULL; //p表示正向第二个结点
+	while(p != NULL)
+	{
+		//逆转h指针
+		h -> link = pr;
+		//指针前移
+		pr = h;
+		h = p;
+		p = p -> link;
+	}
+	h -> link = pr;
+};
