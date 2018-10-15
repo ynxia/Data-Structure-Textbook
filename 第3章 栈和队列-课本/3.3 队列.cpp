@@ -182,3 +182,85 @@ bool LinkedQueue<T>::EnQueue(const T& x)
 	}
 	return true;
 };
+
+template<typename T>
+bool LinkedQueue<T>::DeQueue(T& x)
+{
+	//DeQueue表示delete
+	if(IsEmpty() == true)
+	{
+		return false;
+	}
+	LinkNode<T> *p = front;
+	x = font -> link;
+	front = front -> link;
+	delete p;
+	return true;
+};
+
+template<typename T>
+bool LinkedQueue<T>::getFront(T& x) const
+{
+	if(IsEmpty() == true)
+	{
+		return false;
+	}
+	x = front -> data;
+	return true;
+};
+
+template<typename T>
+int LinkedQueue<T>::getSize() const
+{
+	LinkNode<T> *p = front;
+	int k = 0;
+	while(p != NULL)
+	{
+		p = p -> link;
+		k++;
+	}
+	return k;
+};
+
+template<typename T>
+ostream& operator<<(ostream& os, LinkedQueue<T>& Q)
+{
+	os << "队列中的元素个数有" << Q.getSize() << endl;
+	LinkNode<T> *p = Q.front;
+	nt i = 0;
+	while(p != NULL)
+	{
+		os << ++i << ":" <<p -> data << endl;
+		p = p -> link;
+	}
+	return os;
+};
+
+//一般情况下，逐行处理数据的情况都少不了使用队列作为辅助工具
+#include<stdio>
+#include<iostream>
+#include"queue.h"
+void YANGVI(int n) //n表示行数
+{
+	Queue q(n + 1);
+	int i = 1, j, s = k = 0, t, u;
+	//先放入两个初始元素1
+	q.EnQueue(i);
+	q.EnQueue(i);
+	for(i = 1; i <= n; i++)
+	{
+		cout << endl;
+		q.EnQueue(k);
+		for(j = 1; j <= i + 2; j++) //处理第i行的i + 2个系数
+		{
+			q.DeQueue(t);
+			u = s + t;
+			q.EnQueue(u);
+			s = t;
+			if(j != i + 2)
+			{
+				cout << s << '';
+			}
+		}
+	}
+};
