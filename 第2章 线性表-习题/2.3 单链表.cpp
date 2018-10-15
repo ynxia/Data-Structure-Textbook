@@ -285,8 +285,7 @@ void siftToLeft(LinkList& L, LinkNode* &p, LinkNode* &pr, int k)
 //没有附加头结点
 void Reverse(LinkNode* &h)
 {
-	//算法思想：从首元结点开始，逐个地把链表L的当前结点p
-	//插入新的链表头部
+	//解决方案一
 	if(h == NULL)
 	{
 		return;
@@ -302,4 +301,95 @@ void Reverse(LinkNode* &h)
 		p = p -> link;
 	}
 	h -> link = pr;
+};
+
+void Reverse(LinkList& L)
+{
+	//解决方案二(*)
+	LinkNode *p = L -> link, *pr;
+	L -> link = NULL;
+	while(p != NULL)
+	{
+		//摘下剩余链的首元结点
+		pr = p;
+		p = p -> link;
+		//作为首元结点插入结果链
+		pr -> link = L -> link;
+		L -> link = pr;
+	}
+};
+
+//2.2.23 设在一个带头结点的单链表中所有元素结点的数据值按递增顺序排列，
+//设计一个算法，删除表中所有大于min且小于max的元素(若存在)
+typedef int DataType;
+void rangeDelete(LinkList& L, DataType min, DataType max)
+{
+	LinkNode *pr = L, *p = L -> link;
+	while(p != NULL && p -> data <= min)
+	{
+		pr = p;
+		p = p -> link;
+	}
+	while(p != NULL && p -> data < max)
+	{
+		pr -> link = p -> link;
+		delete p;
+		 p = pr -> link;
+	}
+};
+
+//2.2.24 设在一个带头结点的单链表中所有元素结点的数据值无序排列，
+//设计一个算法，删除表中所有大于min且小于max的元素(若存在)
+typedef int DataType;
+void rangeDelete(LinkList& L, DataType min, DataType max)
+{
+	LinkNode *pr = L, *p = L -> link;
+	while(p != NULL)
+	{
+		if(p -> data > min && p -> data < max)
+		{
+			pr -> link = p -> link;
+			delete p;
+			p = pr -> link;
+		}
+		else
+		{
+			pr = p;
+			p = p -> link;
+		}
+	}
+};
+
+//2.3.26 已知一个带头结点的单链表中包含3类字符（数字字符，字母字符和其他字符），
+//设计一个算法，构造3个新链表，使每个链表中只包含同一类字符。
+//要求使用原表空间，表头结点可以另辟空间
+#include<ctype>
+void Seperate(LinkList& LA, LinkList& LB, LinkList& LC)
+{
+	LinkNode *pa, *pb, *pc, *p = LA -> link;
+	pa = LA;
+	pb = LB = new LinkNode;
+	pc = LC = new LinkNode;
+	while(p != NULL)
+	{
+		if(isdigit(p -> data))
+		{
+			pa -> link = p;
+			pa = p;
+		}
+		else if(isalpha(p -> data))
+		{
+			pb -> link = p;
+			pb = p;
+		}
+		else
+		{
+			pc -> link = p;
+			pc = p;
+		}
+		p = p -> link;
+	}
+	pa -> link = NULL;
+	pb -> link = NULL;
+	pc -> link = NULL;
 };
