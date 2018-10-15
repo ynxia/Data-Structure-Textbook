@@ -375,17 +375,17 @@ void Seperate(LinkList& LA, LinkList& LB, LinkList& LC)
 		if(isdigit(p -> data))
 		{
 			pa -> link = p;
-			pa = p;
+			pa = pa -> link;
 		}
 		else if(isalpha(p -> data))
 		{
 			pb -> link = p;
-			pb = p;
+			pb = pb -> link;
 		}
 		else
 		{
 			pc -> link = p;
-			pc = p;
+			pc = pc -> link;
 		}
 		p = p -> link;
 	}
