@@ -55,14 +55,14 @@ int Decision(int p[], int n)
 	//算法判断序列p[0]，p[1]，...，p[n]是否合理的出栈序列，如果合理，则函数返回0
 	//如果不合理，则函数返回1
 	SeqStack S;
-	InitStack(S);
+	InitStack(S); //任意的给定序列
 	int i = 1, k = 0, j;
 	Push(S, i);
 	do{
 		getTop(S, j); //出栈并把栈顶元素保存在j中，出栈操作不改变栈顶元素的性质
-		if(j < p[k])
+		if(j < p[k]) //栈顶元素小于相应位置上的序列元素
 		{
-			i++;
+			i++; //序列向后移一位
 			Push(S, i);
 		}
 		else
