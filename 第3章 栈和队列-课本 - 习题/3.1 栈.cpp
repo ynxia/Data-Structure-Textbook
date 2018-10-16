@@ -26,4 +26,26 @@ void StackFull(SeqStack& S)
 	S.elem = temp; //新数组成为栈的数组空间
 };
 
+//借助栈实现单链表的逆置运算
+//方法：首先遍历单链表，逐个节点删除并把被删结点存入栈中，再从栈中取出存放的结点把它们依次链入单链表中
+void Reverse(LinkList& L)
+{
+	LinkStack S;
+	LinkNode *p = L -> link, *q;
+	if(p != NULL)
+	{
+		L -> link = p -> link;
+		Push(S, p);
+		p = L -> link;
+	}
+	p = L;
+	while(!StackEmpty(S))
+	{
+		Pop(S, q);
+		p -> link = q;
+		p = q;
+	}
+	p -> NULL;
+};
+
 
