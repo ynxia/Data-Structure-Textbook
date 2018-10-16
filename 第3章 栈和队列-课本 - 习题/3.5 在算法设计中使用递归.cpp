@@ -182,3 +182,25 @@ void perm(T A[], int i, int n)
 //使用using namespace std;时很可能出现自己定义的变量使用时出现定义不明确的情况，建议使用std::cout等语句
 //视情况，选择使用模板对函数进行定义
 
+//3.5.15 编写一个递归算法，找出从自然数1,2,...，n中任取r个数的所有组合
+void combinate(int A[], int m, int n, int r)
+{
+	int i, j;
+	for(i = m; i >= n; i--)
+	{
+		A[n-1] = i;
+		if(n > 1)
+		{
+			combinate(A, i - 1, n - 1, r);
+		}
+		else
+		{
+			for(j = r - 1; j >= 0; j--)
+			{
+				cout << A[j];
+			}
+			cout << endl;
+		}
+	}
+};
+
