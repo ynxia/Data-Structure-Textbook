@@ -124,3 +124,61 @@ void Queen(int G[], int i)
 		}
 	}
 };
+
+//3.5.13 背包问题
+int KNAP(int s, int n)
+{
+	if(s == 0) //总重量恰为0
+	{
+		return 1;
+	}
+	if(s < 0 || s > 0 && n < 1) //不可能事件
+	{
+		return 0;
+	}
+	if(KNAP(s-w[n-1], n-1)) //所选物品中不包括w[n]
+	{
+		cout << "result: n=" << n << " w[" << n-1 << "]=" << w[n-1] << endl;
+		return 1;
+	}
+	else
+	{
+		return KNAP(s, n-1); //所选物品中包括w[n]
+	}
+};
+
+//3.5.14 编写一个递归算法，输出自然数1到n这n个元素的全排列
+template<typename T>
+void perm(T A[], int i, int n)
+{
+	int j;
+	T temp;
+
+	if (i == 0)
+	{
+		for (j = 0; j < n; j++)
+		{
+			cout << " " << A[j];
+
+		}
+		cout << endl;
+	}
+	else
+	{
+		for (j = 0; j <= i; j++)
+		{
+			temp = A[i]; //元素交换
+			A[i] = A[j];
+			A[j] = temp;
+
+			perm(A, i - 1, n);
+
+			temp = A[i];
+			A[i] = A[j];
+			A[j] = temp;
+		}
+	}
+};
+//使用using namespace std;时很可能出现自己定义的变量使用时出现定义不明确的情况，建议使用std::cout等语句
+//视情况，选择使用模板对函数进行定义
+
