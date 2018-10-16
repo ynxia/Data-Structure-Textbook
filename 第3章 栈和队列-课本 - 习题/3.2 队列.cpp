@@ -195,3 +195,45 @@ int deQueue(CircQueue& Q, QElemType& x)
 
 //3.2.13 若使用单循环链表来表示队列，rear是链表中的一个指针(视为队尾指针)。试基于该结构给出插入和删除算法
 //并给出rear为何值时队列为空
+
+//结构定义
+typedef struct
+{
+	CircNode *rear;
+}CircLinkQueue;
+//(1)
+int enQueue(CircLinkQueue& Q, QElemType x)
+{
+	CircNode *s = new CircNode;
+	if(s == NULL)
+	{
+		cerr << "存储分配失败" << endl;
+		return 0;
+	}
+	s -> data = x;
+	s -> link = Q.rear -> link;
+	Q.rear -> link = s;
+	Q.rear = Q.rear -> link;
+	return 1;
+};
+//(2)
+int deQueue(CircLinkQueue& Q, QElemType& x)
+{
+	if(Q.rear == NULL)
+	{
+		cerr << "队列空，不能删除" <<endl;
+		return 0;
+	}
+	CircNode *p = Q.rear -> link;
+	if(Q.rear == p)
+	{
+		Q.rear = NULL;
+	}
+	else
+	{
+		Q.rear -> link = p -> link;
+	}
+	x = p -> data;
+	delete p;
+	return 1;
+};
